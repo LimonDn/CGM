@@ -1,11 +1,12 @@
 #include <stdlib.h>
 #include <math.h>
+#include <float.h>
 
 #include "tga.h"
 #include "model.h"
 
-const int height = 800;
-const int width = 800;
+const int height = 1020;
+const int width = 1020;
 const int deph = 255;
 const int phi = 30;
 
@@ -135,10 +136,10 @@ void triangle (Model *model, tgaImage *image, int x0, int y0, int z0, int x1, in
 }
 
 void meshgrid(tgaImage *image, Model *model) {
-double max_x = -10000;
-double max_y = -10000;
-double min_x = 10000;
-double min_y = 10000;
+double max_x = DBL_MIN;
+double max_y = DBL_MIN;
+double min_x = DBL_MAX;
+double min_y = DBL_MAX;
 double A[16]= {cos(phi*3.14/180),0,-sin(phi*3.14/180),0, 0,1,0,0, sin(phi*3.14/180),0,cos(phi*3.14/180),0, 0,0,0,1};
 
 loadDiffuseMap(model, "cat_d.tga");
@@ -146,7 +147,7 @@ loadDiffuseMap(model, "cat_d.tga");
 int zbuf[image->width][image->height];
 for (int i = 0; i < image->width; ++i){
   for (int j = 0; j < image->height; ++j) {
-    zbuf[i][j] = -100000;
+    zbuf[i][j] = -1000000;;
   }
 }
 
